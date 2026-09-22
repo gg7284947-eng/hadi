@@ -26,7 +26,15 @@ function init(){
   scene=new THREE.Scene();
   scene.background=new THREE.Color(0x111827);
   camera=new THREE.PerspectiveCamera(68,innerWidth/innerHeight,.1,300);
-  renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance'});
+  try{
+    renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance'});
+  }catch(e){
+    running=false;
+    document.querySelector('#menu').classList.remove('hidden');
+    document.querySelector('#msg').textContent='WEBGL ERROR — جرّب Chrome أو فعّل Hardware Acceleration';
+    console.error(e);
+    return;
+  }
   renderer.setPixelRatio(1);
   renderer.setSize(innerWidth,innerHeight);
   document.body.appendChild(renderer.domElement);
